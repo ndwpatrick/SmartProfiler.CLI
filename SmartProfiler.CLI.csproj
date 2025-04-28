@@ -7,4 +7,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+  <TargetFramework>net8.0</TargetFramework> 
+  <OutputType>Exe</OutputType>
+  <PackAsTool>true</PackAsTool>
+  <ToolCommandName>smartprofiler</ToolCommandName> 
+  <PackageId>SmartProfiler.CLI</PackageId>
+  <Version>1.0.0</Version> 
+  <Authors>Pratik Nandanwar</Authors>
+  <Description>A simple CLI tool to measure C# method execution time and memory consumption. Like LeetCode's profiler but for your machine.</Description>
+  <PackageLicenseExpression>MIT</PackageLicenseExpression> 
+  <RepositoryUrl>https://github.com/ndwpatrick/SmartProfiler.CLI</RepositoryUrl> 
+  <PackageTags>SmartProfiler, CLI, C#, Profiler</PackageTags> 
+</PropertyGroup>
+
 </Project>
