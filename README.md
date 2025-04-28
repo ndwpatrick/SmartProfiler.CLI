@@ -19,11 +19,11 @@
 
 ### 1. Clone the Repository
 
-git clone https://github.com/your-github-username/SmartProfiler.CLI.git
-cd SmartProfiler.CLI
+- git clone https://github.com/your-github-username/SmartProfiler.CLI.git
+- cd SmartProfiler.CLI
 
 ### 2. Build the Project
-dotnet build
+- dotnet build
 
 ---
 
@@ -36,6 +36,19 @@ dotnet build
   - Memory usage (before/after/peak)
 - Exports detailed CSV reports for analysis.
 - Supports async and Task-returning methods out of the box. No extra configuration needed.
+
+---
+
+## 📦 **Installation**  
+Install SmartProfiler.CLI globally using the .NET CLI: (Requires .NET 6.0 SDK or higher installed.)
+- dotnet tool install --global SmartProfiler.CLI
+
+## ⚡ **Quick Start** 
+Profile the execution time and memory consumption of your C# methods easily.
+
+**Example command:** smartprofiler  --method  YourNamespace.YourClass.YourMethod
+- method: Fully qualified method name you want to profile (e.g., MyApp.Services.MathService.AddNumbers).
+- assembly: (Optional) Specify the path to your DLL if not in the working directory.
 
 ---
 
