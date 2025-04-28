@@ -1,5 +1,9 @@
+
 # SmartProfiler.CLI 🚀
 *A blazing-fast, intelligent C# CLI tool for measuring execution time, memory consumption, and detecting performance bottlenecks in .NET assemblies.*
+
+[![NuGet](https://img.shields.io/nuget/v/SmartProfiler.CLI.svg)](https://www.nuget.org/packages/SmartProfiler.CLI)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/SmartProfiler.CLI.svg)](https://www.nuget.org/packages/SmartProfiler.CLI)
 
 ---
 
