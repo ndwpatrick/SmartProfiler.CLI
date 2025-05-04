@@ -13,7 +13,7 @@
   <PackAsTool>true</PackAsTool>
   <ToolCommandName>smartprofiler</ToolCommandName> 
   <PackageId>SmartProfiler.CLI</PackageId>
-  <Version>1.0.1</Version> 
+  <Version>1.1.0</Version> 
   <Authors>Pratik Nandanwar</Authors>
   <Description>A simple CLI tool to measure C# method execution time and memory consumption. Like LeetCode's profiler but for your machine.</Description>
   <PackageLicenseExpression>MIT</PackageLicenseExpression> 
@@ -22,8 +22,8 @@
   <PackageReadmeFile>README.md</PackageReadmeFile>
 </PropertyGroup>
 
-<ItemGroup>
-  <None Include="README.md" Pack="true" PackagePath="" />
-</ItemGroup>
-
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <Folder Include="MemoryProfiler\" />
+  </ItemGroup>
 </Project>
