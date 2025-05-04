@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+
+namespace SmartProfiler.CLI;
 
 public static class SmartProfiler
 {
     private const double RegressionThreshold = 0.2; // 20%
 
-    public static void Measure(Action actionToProfile, int runs = 10, string label = "Execution", string csvPath = null)
+    public static void Measure(Action actionToProfile, int runs = 10, string label = "Execution", string? csvPath = null)
     {
         var timeResults = new List<double>();
         var memoryResults = new List<double>();
@@ -48,7 +45,7 @@ public static class SmartProfiler
         }
     }
 
-    public static async Task MeasureAsync(Func<Task> asyncActionToProfile, int runs = 10, string label = "Execution", string csvPath = null)
+    public static async Task MeasureAsync(Func<Task> asyncActionToProfile, int runs = 10, string label = "Execution", string? csvPath = null)
     {
         var timeResults = new List<double>();
         var memoryResults = new List<double>();
