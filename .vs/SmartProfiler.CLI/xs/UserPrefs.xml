@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{EE0F7A05-9A68-4EE3-B28A-D11DBC6F67DD}|Default">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
+    <Files>
+      <File FileName="Program.cs" Line="15" Column="29" />
+      <File FileName="Presentation/Commands/ProfileCommand.cs" />
+      <File FileName="Core/Interfaces/IProfilerEngine.cs" />
+      <File FileName="Application/Profilers/Common/ProcessProfilerEngine.cs" />
+      <File FileName="Infrastructure/Diagnostics/CpuDiagnostics.cs" />
+      <File FileName="Infrastructure/Diagnostics/ICpuDiagnostics.cs" />
+      <File FileName="Application/Profilers/Common/MethodProfilerEngine.cs" />
+      <File FileName="Application/Profilers/Common/SmartProfiler.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SmartProfiler.CLI">
+            <Node name="SmartProfiler.CLI">
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.SmartProfiler.CLI PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>

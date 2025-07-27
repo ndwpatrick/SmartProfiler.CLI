@@ -33,14 +33,14 @@ public static class SmartProfiler
         }
 
         PrintStats(timeResults, memoryResults, label);
-        PrintHistogram(timeResults, "Time (ms)");
-        PrintHistogram(memoryResults, "Memory (KB)");
+        HistogramPrinter.PrintHistogram(timeResults, "Time (ms)");
+        HistogramPrinter.PrintHistogram(memoryResults, "Memory (KB)");
         DetectPerformanceRegression(timeResults);
         AnalyzeBottleneck(timeResults, memoryResults);
 
         if (!string.IsNullOrEmpty(csvPath))
         {
-            ExportToCsv(timeResults, memoryResults, csvPath);
+            CsvExporter.ExportToCsvFile(timeResults, memoryResults, csvPath);
             Console.WriteLine($"\n=> Results exported to: {csvPath}");
         }
     }
@@ -72,14 +72,14 @@ public static class SmartProfiler
         }
 
         PrintStats(timeResults, memoryResults, label);
-        PrintHistogram(timeResults, "Time (ms)");
-        PrintHistogram(memoryResults, "Memory (KB)");
+        HistogramPrinter.PrintHistogram(timeResults, "Time (ms)");
+        HistogramPrinter.PrintHistogram(memoryResults, "Memory (KB)");
         DetectPerformanceRegression(timeResults);
         AnalyzeBottleneck(timeResults, memoryResults);
 
         if (!string.IsNullOrEmpty(csvPath))
         {
-            ExportToCsv(timeResults, memoryResults, csvPath);
+            CsvExporter.ExportToCsvFile(timeResults, memoryResults, csvPath);
             Console.WriteLine($"\n=> Results exported to: {csvPath}");
         }
     }
@@ -90,41 +90,6 @@ public static class SmartProfiler
         Console.WriteLine($"Runs: {times.Count}");
         Console.WriteLine($"Time (ms): Min = {times.Min():F2}, Max = {times.Max():F2}, Avg = {times.Average():F2}");
         Console.WriteLine($"Memory (KB): Min = {memories.Min():F2}, Max = {memories.Max():F2}, Avg = {memories.Average():F2}");
-    }
-
-    private static void PrintHistogram(List<double> values, string metric)
-    {
-        Console.WriteLine($"\n{metric} Distribution:");
-
-        double min = values.Min();
-        double max = values.Max();
-        double range = max - min;
-
-        int bucketCount = 10;
-        double bucketSize = range / bucketCount;
-
-        if (bucketSize == 0)
-        {
-            Console.WriteLine("All values are identical, no distribution to show.");
-            return;
-        }
-
-        int[] buckets = new int[bucketCount];
-
-        foreach (var value in values)
-        {
-            int bucketIndex = (int)((value - min) / bucketSize);
-            if (bucketIndex == bucketCount) bucketIndex--; // handle max edge case
-            buckets[bucketIndex]++;
-        }
-
-        for (int i = 0; i < bucketCount; i++)
-        {
-            double rangeStart = min + i * bucketSize;
-            double rangeEnd = rangeStart + bucketSize;
-            Console.Write($"{rangeStart:F2}-{rangeEnd:F2}: ");
-            Console.WriteLine(new string('*', buckets[i]));
-        }
     }
 
     private static void DetectPerformanceRegression(List<double> times)
@@ -174,18 +139,6 @@ public static class SmartProfiler
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("=> No major bottleneck detected. Code appears efficient under current test conditions.");
             Console.ResetColor();
-        }
-    }
-
-    private static void ExportToCsv(List<double> times, List<double> memories, string csvPath)
-    {
-        using var writer = new StreamWriter(csvPath);
-
-        writer.WriteLine("Run,Time (ms),Memory (KB)");
-
-        for (int i = 0; i < times.Count; i++)
-        {
-            writer.WriteLine($"{i + 1},{times[i]:F2},{memories[i]:F2}");
         }
     }
 }

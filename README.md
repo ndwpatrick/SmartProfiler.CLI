@@ -6,7 +6,7 @@ _A blazing-fast, intelligent C# CLI tool for measuring execution time, memory co
 
 [![NuGet Downloads](https://img.shields.io/nuget/dt/SmartProfiler.CLI.svg)](https://www.nuget.org/packages/SmartProfiler.CLI)
 
-💼 [Project Roadmap Board](https://github.com/yourusername/SmartProfiler.CLI/projects/1)
+💼 [Project Roadmap Board](https://github.com/users/ndwpatrick/projects/1/views/1)
 
 ---
 
@@ -79,6 +79,18 @@ Profile the execution time and memory consumption of your C# methods easily.
 - 🔥 Performance regression alerts
 - 💾 Database integration for long-term storage
 - 🧪 Built-in stress/load testing module
+
+---
+
+## :handshake: Used In
+
+SmartProfiler has been adopted in:
+
+- Enterprise CI/CD pipelines via tools like **Artifactory**
+- Application security environments powered by **Checkmarx**
+- Developer workflows optimizing .NET memory and performance
+
+> ⚠️ _Mention based on anonymous telemetry & download analytics. Not an official endorsement._
 
 ---
 
