@@ -23,7 +23,34 @@
 </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Presentation\" />
+    <None Remove="Presentation\Commands\" />
+    <None Remove="Core\" />
+    <None Remove="Presentation\Middleware\" />
+    <None Remove="Presentation\Middleware\ErrorHandling\" />
+    <None Remove="Core\Interfaces\" />
+    <None Remove="Core\Models\" />
+    <None Remove="Infrastructure\Diagnostics\" />
+    <None Remove="Application\" />
+    <None Remove="Application\Profilers\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="" />
-    <Folder Include="MemoryProfiler\" />
+    <Folder Include="Presentation\" />
+    <Folder Include="Presentation\Commands\" />
+    <Folder Include="Core\" />
+    <Folder Include="Presentation\Middleware\" />
+    <Folder Include="Presentation\Middleware\ErrorHandling\" />
+    <Folder Include="Core\Interfaces\" />
+    <Folder Include="Core\Models\" />
+    <Folder Include="Infrastructure\Diagnostics\" />
+    <Folder Include="Application\" />
+    <Folder Include="Application\Profilers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Spectre.Console.Cli" Version="0.50.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.7" />
+    <PackageReference Include="Spectre.Console" Version="0.50.0" />
   </ItemGroup>
 </Project>

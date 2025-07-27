@@ -1,46 +1,50 @@
-﻿using System;
-using SmartProfiler.CLI.MemoryProfiler;
-
-namespace SmartProfiler.CLI;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Spectre.Console.Cli;
+using SmartProfiler.CLI.Presentation.Commands;
+using SmartProfiler.CLI.Core.Interfaces;
+using SmartProfiler.CLI.Infrastructure.DependencyInjection;
+using SmartProfiler.Profilers;
+using SmartProfiler.CLI.Infrastructure.Diagnostics;
+using SmartProfiler.CLI.Application.Profilers.Common;
+using Spectre.Console;
 
 class Program
 {
-    private static string? memoryLogPath = null;
-    private static bool useDetailedMemory = false;
-
-    static void Main(string[] args)
+    public static int Main(string[] args)
     {
-        Console.WriteLine("\n🚀 SmartProfiler CLI Started");
+        // Register services
+        var services = new ServiceCollection();
+        services.AddSingleton<IProfileEnricher, MethodProfilerEngine>();
+        services.AddSingleton<IProfilerEngine, ProcessProfilerEngine>();
+        services.AddSingleton<ICpuDiagnostics, CpuDiagnostics>();
 
-        // Parse CLI arguments
-        foreach (var arg in args)
+        // Register CLI dependencies
+        var registrar = new TypeRegistrar(services);
+
+        // Setup command app with DI
+        var app = new CommandApp<ProfileCommand>(registrar);
+        app.Configure(config =>
         {
-            switch (arg)
-            {
-                case "--memory-log" or "-m" when args is [.., var path]:
-                    memoryLogPath = path;
-                    break;
-                case "--detailed-memory" or "-d":
-                    useDetailedMemory = true;
-                    break;
-            }
-        }
+            config.SetApplicationName("SmartProfiler.CLI");
+            config.AddCommand<ProfileCommand>("profile")
+                  .WithDescription("Profile a .NET application and show method-level CPU usage.");
+        });
 
-        MemoryProfilerTool? memoryProfiler = null;
-
-        if (!string.IsNullOrEmpty(memoryLogPath))
+        app.Configure(config =>
         {
-            Console.WriteLine($"Memory profiling enabled. Report will be saved to: {memoryLogPath}");
-            memoryProfiler = new MemoryProfilerTool(memoryLogPath, useDetailedMemory);
-            memoryProfiler.Start();
-        }
+            config.AddCommand<ProfileCommand>("profile")
+                  .WithDescription("Profiles a method in the specified assembly")
+                  .WithExample(new[] {
+                      "profile",
+                      "DummyTestApp",
+                      "--method", "DummyTestApp.MemoryCruncher.SimulateHeavyMemoryAndCPU",
+                      "--assembly", "./DummyTestApp/bin/Debug/net8.0/DummyTestApp.dll",
+                      "--detailed-memory",
+                      "--memory-log", "./memory-log.txt"
+                  });
+        });
 
-        if (memoryProfiler != null)
-        {
-            var result = memoryProfiler.Stop();
-            Console.WriteLine(result.ToReadableReport());
-        }
 
-        Console.WriteLine("✅ Profiling Completed.\n");
+        return app.Run(args);
     }
 }
