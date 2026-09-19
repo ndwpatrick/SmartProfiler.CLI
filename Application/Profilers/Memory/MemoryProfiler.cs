@@ -13,6 +13,7 @@ public class MemoryProfilerTool
     private readonly bool _useDetailedMemory;
     private Timer _timer;
     private string? _logFilePath;
+    private GcCollectionSummary? _gcSummaryAtStart;
 
     public MemoryProfilerTool(string? logFilePath = null, bool? useDetailedMemory = false)
     {
@@ -29,13 +30,17 @@ public class MemoryProfilerTool
         GC.Collect();
 
         _startMemory = GC.GetTotalMemory(true);
+        _gcSummaryAtStart = GcCollectionSummary.Capture();
     }
 
     public MemoryProfileResult Stop()
     {
         _timer.Dispose();
 
-        long endMemory = GC.GetTotalMemory(true);
+        var gcSummary = _gcSummaryAtStart is null
+            ? new GcCollectionSummary()
+            : GcCollectionSummary.Since(_gcSummaryAtStart);
+        long endMemory = GC.GetTotalMemory(forceFullCollection: false);
         var gcInfo = GC.GetGCMemoryInfo();
 
         if (_useDetailedMemory)
@@ -51,7 +56,8 @@ public class MemoryProfilerTool
             PeakMemory = _peakMemory,
             HeapSizeBytes = gcInfo.HeapSizeBytes,
             FragmentedBytes = gcInfo.FragmentedBytes,
-            HighMemoryLoadThresholdBytes = gcInfo.HighMemoryLoadThresholdBytes
+            HighMemoryLoadThresholdBytes = gcInfo.HighMemoryLoadThresholdBytes,
+            GcSummary = gcSummary
         };
 
         if (!string.IsNullOrEmpty(_logFilePath))

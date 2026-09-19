@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Reflection;
+using SmartProfiler.CLI.Core.Diagnostics;
 using SmartProfiler.CLI.Core.Interfaces;
 using Spectre.Console;
 
@@ -62,8 +63,9 @@ public class MethodProfilerEngine : IProfileEnricher
             }
 
             var sw = Stopwatch.StartNew();
+            var cpuAnalyzer = new MethodCpuAnalyzer();
+            var cpuMeasurement = cpuAnalyzer.Start();
             var result = method.Invoke(instance, methodParams);
-            sw.Stop();
 
             if (result is Task task)
             {
@@ -81,9 +83,14 @@ public class MethodProfilerEngine : IProfileEnricher
                 AnsiConsole.MarkupLine($"[blue]Result:[/] [green]{result}[/]");
             }
 
+            sw.Stop();
+            var cpuProfile = cpuAnalyzer.Stop(methodName, cpuMeasurement);
+
             AnsiConsole.Write(new Rule("[green]Method Profiling Complete[/]").RuleStyle("grey").Centered());
             AnsiConsole.MarkupLine($"[bold]Method:[/] [cyan]{methodName}[/]");
             AnsiConsole.MarkupLine($"[bold]Execution Time:[/] [yellow]{sw.ElapsedMilliseconds} ms[/]");
+            AnsiConsole.MarkupLine($"[bold]CPU Time:[/] [yellow]{cpuProfile.CpuTime.TotalMilliseconds:F2} ms[/]");
+            AnsiConsole.MarkupLine($"[bold]CPU Usage:[/] [yellow]{cpuProfile.CpuUsagePercentage:F2}%[/] across {cpuProfile.LogicalProcessorCount} logical processors");
         }
         catch (TargetInvocationException ex)
         {
